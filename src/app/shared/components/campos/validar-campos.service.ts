@@ -8,8 +8,8 @@ export class ValidarCamposService {
 
   constructor() { }
 
-  hasErrorValidar(control: AbstractControl, errorName: string): boolean {
-    if ((control.dirty || control.touched) && this.hasError(control, errorName)) {
+  hasErrorValidar(control: AbstractControl, errorName: string): boolean{
+    if((control.dirty || control.touched) && this.hasError(control, errorName)) {
       return true;
     }
     return false;
@@ -19,8 +19,9 @@ export class ValidarCamposService {
     return control.hasError(errorName);
   }
 
-  lengthValidar(control: AbstractControl, errorName: string): number {
+  lengthValidar(control: AbstractControl, errorName: string): boolean {
     const error = control.errors[errorName];
-    return error.requiredLength || error.min || error.max || 0;
+    return error.requiredLength || error.min ||error.max || 0;
   }
+
 }
