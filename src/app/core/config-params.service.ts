@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { ConfigPrams } from '../shared/models/config-prams';
+import { Injectable } from '@angular/core';
+import { ConfigParams } from '../shared/models/config-params';
 
 @Injectable({
   providedIn: 'root'
@@ -9,18 +9,18 @@ export class ConfigParamsService {
 
   constructor() { }
 
-  configurarParametros(config: ConfigPrams): HttpParams {
+  configurarParametros(config: ConfigParams): HttpParams {
     let httpParams = new HttpParams();
-    if (config.pagina) {
+    if(config.pagina){
       httpParams = httpParams.set('_page', config.pagina.toString());
     }
-    if (config.limite) {
+    if(config.limite){
       httpParams = httpParams.set('_limit', config.limite.toString());
     }
-    if (config.pesquisa) {
+    if(config.pesquisa) {
       httpParams = httpParams.set('q', config.pesquisa);
     }
-    if (config.campo) {
+    if(config.campo) {
       httpParams = httpParams.set(config.campo.tipo, config.campo.valor.toString());
     }
     httpParams = httpParams.set('_sort', 'id');
@@ -29,3 +29,5 @@ export class ConfigParamsService {
     return httpParams;
   }
 }
+
+

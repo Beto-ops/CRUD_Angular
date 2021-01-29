@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
+import {debounceTime} from 'rxjs/operators';
 import { FilmesService } from 'src/app/core/filmes.service';
+import { ConfigParams } from 'src/app/shared/models/config-params';
 import { Filme } from 'src/app/shared/models/filme';
 
 
@@ -11,11 +12,13 @@ import { Filme } from 'src/app/shared/models/filme';
   styleUrls: ['./listagem-filmes.component.scss']
 })
 export class ListagemFilmesComponent implements OnInit {
+  readonly semFoto = 'https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-permanentes/cindra/imagens/sem.jpg.gif/image';
 
-  pagina = 0;
-  readonly qtdPagina = 4;
-  texto: string;
-  genero: string;
+  config: ConfigParams = {
+    pagina: 0,
+    limite: 4,
+
+}
   filmes: Filme[] = [];
   filtrosListagem: FormGroup;
   generos: Array<string>;
@@ -30,13 +33,16 @@ export class ListagemFilmesComponent implements OnInit {
       genero: ['']
     });
 
-    this.filtrosListagem.get('texto').valueChanges.subscribe((val: string) => {
-      this.texto = val;
+    this.filtrosListagem.get('texto').valueChanges
+      .pipe(debounceTime(400))
+      .subscribe((val: string) => {
+      this.config.pesquisa = val;
       this.resetarConsulta();
     });
 
-    this.filtrosListagem.get('genero').valueChanges.subscribe((val: string) => {
-      this.genero = val;
+    this.filtrosListagem.get('genero').valueChanges
+      .subscribe((val: string) => {
+      this.config.campo = {tipo: 'genero', valor: 'val'};
       this.resetarConsulta();
     });
 
@@ -51,13 +57,13 @@ export class ListagemFilmesComponent implements OnInit {
   }
 
   private listarFilmes(): void {
-    this.pagina++;
-    this.filmesService.listar(this.pagina, this.qtdPagina, this.texto, this.genero)
+    this.config.pagina++;
+    this.filmesService.listar(this.config)
     .subscribe((filmes: Filme[]) => this.filmes.push(...filmes));
   }
 
   private resetarConsulta() {
-    this.pagina = 0;
+    this.config.pagina = 0;356
     this.filmes = [];
     this.listarFilmes();
   }
