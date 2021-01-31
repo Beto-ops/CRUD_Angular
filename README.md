@@ -1,13 +1,10 @@
-# Curso Intermediário de Angular - Digital Innovation One
+# Projeto CRUD
 
-Esse curso foi feito para a plataforma [Digital Innovation One](https://digitalinnovation.one/)
-
-O curso consiste em um sistema de filmes, com a possibilidade de cadastros, edições, listagem e visualização dos cursos de outros usuários.
+O projeto consiste em um sistema de filmes, com a possibilidade de cadastros, edições, listagem e visualização dos cursos de outros usuários.
 
 ## Instalação
 
-1. clone o repositório `git clone git@github.com:RenanRB/curso-angular.git`
-2. Entre no projeto e instale as dependencias `npm install`
+1. Entre no projeto e instale as dependencias `npm install`
 
 ## Ambiente Local
 
